@@ -1,7 +1,7 @@
 FROM debian:latest
 
 RUN apt-get update
-RUN apt-get install -y ninja-build gettext cmake unzip curl git nodejs npm python3 cargo
+RUN apt-get install -y ninja-build gettext cmake unzip curl git nodejs npm python3 python3-venv cargo
 
 # Build Neovim
 # Temp directory for building

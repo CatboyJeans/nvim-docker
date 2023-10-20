@@ -22,7 +22,7 @@ RUN git clone https://github.com/CatboyJeans/init.lua.git ~/.config/nvim
 RUN apt-get install -y ripgrep 
 
 # Initialize nvim, assuming packer is bootstraped
-RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' -c 'MasonUpdate' -c 'qall'
 
 # Create workspace directory
 WORKDIR /root/workspace

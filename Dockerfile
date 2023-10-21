@@ -1,7 +1,7 @@
 FROM debian:latest
 
 RUN apt-get update
-RUN apt-get install -y ninja-build gettext cmake unzip curl git nodejs npm python3 python3-venv cargo
+RUN apt-get install -y ninja-build gettext cmake unzip curl git nodejs npm python3 python3-venv cargo default-jre
 
 # Build Neovim
 # Temp directory for building
@@ -21,8 +21,12 @@ RUN git clone https://github.com/CatboyJeans/init.lua.git ~/.config/nvim
 # ripgrep
 RUN apt-get install -y ripgrep 
 
-# Initialize nvim, assuming packer is bootstraped
-RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' -c 'MasonUpdate' -c 'qall'
+# Nvim Initialization
+# Initialize Packer
+RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+# Install LSP's
+RUN nvim --headless -c 'MasonInstall clangd cmake-language-server dockerfile-language-server groovy-language-server\
+                        lua-language-server pyright rust-analyzer typescript-language-server' -c 'q'
 
 # Create workspace directory
 WORKDIR /root/workspace

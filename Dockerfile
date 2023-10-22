@@ -1,7 +1,8 @@
 FROM debian:latest
 
 RUN apt-get update
-RUN apt-get install -y ninja-build gettext cmake unzip curl git nodejs npm python3 python3-venv cargo default-jre
+RUN apt-get install -y ninja-build gettext cmake unzip curl git nodejs npm python3 python3-venv python3-pip\
+                       cargo default-jre
 
 # Build Neovim
 # Temp directory for building
@@ -30,6 +31,11 @@ RUN nvim --headless -c 'MasonInstall clangd cmake-language-server dockerfile-lan
 
 # Create workspace directory
 WORKDIR /root/workspace
+
+# Install python packages
+COPY requirements.txt ./
+RUN pip3 install --break-system-packages -r requirements.txt && rm requirements.txt
+
 # Delete TMP directory
 RUN rm -rf /root/TMP
 
